@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
+import Layout from "./components/Layout";
+import Home from './components/Home';
+import About from './components/About';
+import NotFound from './components/NotFound';
+import Contact from './components/Contact';
+import Project from './components/Project';
+
+import Project1 from "./components/Project/Project1";
+
+// ! The flow for nested routing should be made dynamic
+// ! instead of hardcoded
+// TODO: fix that 
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="projects">
+            <Route index element={<Project />} />
+            <Route path='project1' element={<Project1 />} /> {/*A nested route!*/}
+          </Route>
+          <Route path="contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default App;
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(<App />);
+
+// export default App
